@@ -1,0 +1,78 @@
+<CadastroEmpresa>
+    canvas.before:
+        Color:
+            rgba: (43/255, 55/255, 63/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            id: actBar
+            pos_hint: {'top':1}  
+            background_normal: '' 
+            background_down: ''
+            background_color: 255, 255, 255, 1
+            ActionView:
+                use_separator: True
+                
+                ActionPrevious:
+                    color: 0, 0, 0, 1
+                    title: 'Exeke Vista'
+                    with_previous: True
+                        
+                ActionGroup:
+                    color: 0, 0, 0, 1
+                    text: 'Configurações'
+                    
+                    ActionButton:
+                        text: 'Idi. Português'
+                    ActionButton:
+                        text: 'Idi. Inglês'
+                
+                ActionGroup:
+                    color: 0, 0, 0, 1
+                    text: 'Visualização'
+                    ActionButton:
+                        text: 'Abrir'
+                        on_press: print('Pressionado Abrir')
+                        
+                    ActionButton:
+                        text: 'Salvar'
+                        on_press: print('Pressionado Salvar')
+                        
+                    ActionButton:
+                        text: 'Salvar como...'
+                        on_press: print('Pressionado Salvar como...')
+                    
+                    ActionButton:
+                        text: 'Sair'
+                        on_press: print('Pressionado Sair')
+
+                ActionGroup:
+                    color: 0, 0, 0, 1
+                    text: 'Ajuda'
+                    
+                    ActionButton:
+                        text: 'Sobre'
+                    ActionButton:
+                        text: 'Ajuda'
+            
+        Label:
+            text: ''
+            size: self.texture_size
+            bold: True
+            color: [0, 0, 1, 1]
+            font_size: '40sp'      
+                    
+        Label:
+            text: ''
+            size: self.texture_size
+            bold: True
+            color: [0, 0, 1, 1]
+            font_size: '30sp'
+
+<MyCheckbox@BoxLayout+ActionItem>:
+    ActionLabel:
+        text: 'Selec.'
+    ActionCheck:

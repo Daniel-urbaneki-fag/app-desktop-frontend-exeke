@@ -3,14 +3,21 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
-from kivy.uix.scrollview import ScrollView
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 import requests
 import json
 
-Builder.load_file('screens/cadastroEmpresa.kv')
+Builder.load_file('screens/telaPrincipal.kv')
+Builder.load_file('screens/barraAcao.kv')
+Builder.load_file('screens/barraLateral.kv')
+Builder.load_file('screens/telaCadastro.kv')
+Builder.load_file('screens/telaCadastroUsuario.kv')
 
-class CadastroEmpresa(BoxLayout):    
+class TelaPrincipal(BoxLayout):
+    pass
+
+class TelaCadastro(Screen):
     def cadastrarDados(self):
         api = "http://127.0.0.1:5000/cadastrarEmpresa"
 
@@ -44,13 +51,38 @@ class CadastroEmpresa(BoxLayout):
         pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
             size=(300, 60), pos_hint={"top": 0.97}, background_color=response["color_msg"])
         pop.open()
-    
+
+class TelaCadastroUsuario(Screen):
+    pass
+
+class BarraLateral(BoxLayout):
+    def mudaTela(self):
+        for child in self.children:
+            for item in child.children:
+                print(item)
+            if type(child) == MenuScreen:
+                child.current = "TelaCadastroUsuario"
+
+class BarraAcao(BoxLayout):
+    pass
+
+class MenuScreen(ScreenManager):
+    pass
     
 class ExekeApp(App):
     def build(self):
         Window.size = (1366, 768)
         self.icon = ('screens/icone.png')
-        return CadastroEmpresa()
+        tela = TelaPrincipal()
+        tela.add_widget(BarraAcao())
+        main = BoxLayout()
+        main.add_widget(BarraLateral())
+        screenManager = MenuScreen()
+        screenManager.add_widget(TelaCadastro(name="TelaCadastroEmpresa"))
+        screenManager.add_widget(TelaCadastroUsuario(name="TelaCadastroUsuario"))
+        main.add_widget(screenManager)
+        tela.add_widget(main)
+        return tela
     
 if __name__ == '__main__':
     ExekeApp().run()

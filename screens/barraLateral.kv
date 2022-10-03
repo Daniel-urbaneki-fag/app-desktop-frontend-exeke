@@ -1,0 +1,57 @@
+<BarraLateral>
+    orientation: 'vertical'
+    size_hint_x: 0.2
+    canvas.before:
+        Color:
+            rgba: (23/255, 31/255, 36/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: 300
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            size_hint_y: .1
+            RoundedButton:
+                size_hint: (1, 1)
+                text: 'Solicitações'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            size_hint_y: .1
+            RoundedButton:
+                size_hint: (1, 1)
+                text: 'Usuários'
+            Button:
+                text: 'Novo usuário'
+                on_press: root.mudaTela()
+            Button:
+                text: 'Editar usuário'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            size_hint_y: .1
+            RoundedButton:
+                size_hint: (1, 1)
+                text: 'Empresa'
+            Button:
+                text: 'Nova empresa'
+            Button:
+                text: 'Editar empresa'
+    BoxLayout:
+        orientation: "vertical"
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    pos_hint: {'center_x': 0.5}
+    canvas.before:
+        Color:
+            rgba: (242/255, 106/255, 53/255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [7]

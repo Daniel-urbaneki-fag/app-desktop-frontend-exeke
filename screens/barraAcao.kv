@@ -1,0 +1,69 @@
+<BarraAcao>
+    orientation: 'vertical'
+    size_hint_y: None
+    height: 30
+    canvas.before:
+        Color:
+            rgba: (23/255, 31/255, 36/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    ActionBar:
+        id: actBar
+        pos_hint: {'top':1}
+        background_normal: '' 
+        background_down: ''
+        background_color: 255, 255, 255, 1
+        height: 30
+        ActionView:
+            use_separator: True
+            
+            ActionPrevious:
+                color: 0, 0, 0, 1
+                title: ''
+                with_previous: False
+                app_icon: ''
+                app_icon_width: 0
+                app_icon_height: 0
+                size_hint_x: None
+                width: len(self.title) * 10
+                    
+            ActionGroup:
+                color: 0, 0, 0, 1
+                text: 'Configurações'
+                mode: 'spinner'
+                
+                ActionButton:
+                    text: 'Idi. Português'
+                ActionButton:
+                    text: 'Idi. Inglês'
+            
+            ActionGroup:
+                color: 0, 0, 0, 1
+                text: 'Visualização'
+                mode: 'spinner'
+                ActionButton:
+                    text: 'Abrir'
+                    on_press: print('Pressionado Abrir')
+                    
+                ActionButton:
+                    text: 'Salvar'
+                    on_press: print('Pressionado Salvar')
+                    
+                ActionButton:
+                    text: 'Salvar como...'
+                    on_press: print('Pressionado Salvar como...')
+                
+                ActionButton:
+                    text: 'Sair'
+                    on_press: print('Pressionado Sair')
+
+            ActionGroup:
+                color: 0, 0, 0, 1
+                text: 'Ajuda'
+                mode: 'spinner'
+                
+                ActionButton:
+                    text: 'Sobre'
+                ActionButton:
+                    text: 'Ajuda'

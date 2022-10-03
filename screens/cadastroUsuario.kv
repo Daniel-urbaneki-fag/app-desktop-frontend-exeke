@@ -1,0 +1,121 @@
+<CadastroUsuario>
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 50
+        canvas.before:
+            Color:
+                rgba: (43/255, 55/255, 63/255, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: 'Novo Usuário'
+            font_size: '25sp'
+            text_size: (self.width, None)
+            size_hint: (1, 0.1)
+        BoxRounded:
+            orientation: 'vertical'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            padding: 20
+            Label:
+                text: 'Dados cadastrais'
+                font_size: '16sp'
+                text_size: (self.width, None)
+                size_hint: (1, 0.1)
+            LinhaDados:
+                ColunaDado:
+                    size_hint_x: 0.3
+                    TextoForm:
+                        text: 'Tipo'
+                    TextInput:
+                        id: tipo
+                        font_size : '16sp'
+                        multiline : False
+                ColunaDado:
+                    TextoForm:
+                        text: 'Empresa'
+                    TextInput:
+                        id: empresa
+                        font_size : '16sp'
+                        multiline : False
+            LinhaDados:
+                ColunaDado:
+                    TextoForm:
+                        text: 'E-mail'
+                    TextInput:
+                        id: e-mail
+                        font_size : '16sp'
+                        multiline : False
+                ColunaDado:
+                    TextoForm:
+                        text: 'Nome'
+                    TextInput:
+                        id: nome
+                        font_size : '16sp'
+                        multiline : False
+                ColunaDado:
+                    TextoForm:
+                        text: 'Telefone'
+                    TextInput:
+                        id: telefone
+                        font_size : '16sp'
+                        multiline : False
+            LinhaDados:
+                ColunaDado:
+                    TextoForm:
+                        text: 'Senha'
+                    TextInput:
+                        id: senha
+                        font_size : '16sp'
+                        multiline : False
+                ColunaDado:
+                    TextoForm:
+                        text: 'Confirmação de senha'
+                    TextInput:
+                        id: confirmarSenha
+                        font_size : '16sp'
+                        multiline : False
+            RoundedButton:
+                text: 'Salvar'
+                on_press: root.cadastrarDados()
+
+<MyCheckbox@BoxLayout+ActionItem>:
+    ActionLabel:
+        text: 'Selec.'
+    ActionCheck:
+
+<BoxRounded@BoxLayout>
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (196/255, 196/255, 196/255, 0.28)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [7]
+
+<LinhaDados@BoxLayout>
+    orientation: 'horizontal'
+    padding: 10
+
+<ColunaDado@BoxLayout>
+    orientation: 'vertical'
+    padding: 10
+
+<TextoForm@Label>
+    font_size: '16sp'
+    text_size: (self.width, None)
+    size_hint: (1, 0.5)
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    size_hint: (.1, .5)
+    pos_hint: {'center_x': 0.5}
+    canvas.before:
+        Color:
+            rgba: (242/255, 106/255, 53/255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [7]

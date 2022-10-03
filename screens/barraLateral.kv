@@ -27,7 +27,7 @@
                 text: 'Usuários'
             Button:
                 text: 'Novo usuário'
-                on_press: root.mudaTela()
+                on_press: root.mudaTela("TelaCadastroUsuario")
             Button:
                 text: 'Editar usuário'
         BoxLayout:
@@ -39,6 +39,7 @@
                 text: 'Empresa'
             Button:
                 text: 'Nova empresa'
+                on_press: root.mudaTela("TelaCadastroEmpresa")
             Button:
                 text: 'Editar empresa'
     BoxLayout:

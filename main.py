@@ -12,7 +12,10 @@ Builder.load_file('screens/telaPrincipal.kv')
 Builder.load_file('screens/barraAcao.kv')
 Builder.load_file('screens/barraLateral.kv')
 Builder.load_file('screens/telaCadastro.kv')
-Builder.load_file('screens/telaCadastroUsuario.kv')
+Builder.load_file('screens/cadastroUsuario.kv')
+
+class MenuScreen(ScreenManager):
+    pass
 
 class TelaPrincipal(BoxLayout):
     pass
@@ -52,23 +55,18 @@ class TelaCadastro(Screen):
             size=(300, 60), pos_hint={"top": 0.97}, background_color=response["color_msg"])
         pop.open()
 
-class TelaCadastroUsuario(Screen):
+class CadastroUsuario(Screen):
     pass
 
+screenManager = ScreenManager()
+
 class BarraLateral(BoxLayout):
-    def mudaTela(self):
-        for child in self.children:
-            for item in child.children:
-                print(item)
-            if type(child) == MenuScreen:
-                child.current = "TelaCadastroUsuario"
+    def mudaTela(self, tela):
+        screenManager.current = tela
 
 class BarraAcao(BoxLayout):
     pass
 
-class MenuScreen(ScreenManager):
-    pass
-    
 class ExekeApp(App):
     def build(self):
         Window.size = (1366, 768)
@@ -77,9 +75,8 @@ class ExekeApp(App):
         tela.add_widget(BarraAcao())
         main = BoxLayout()
         main.add_widget(BarraLateral())
-        screenManager = MenuScreen()
         screenManager.add_widget(TelaCadastro(name="TelaCadastroEmpresa"))
-        screenManager.add_widget(TelaCadastroUsuario(name="TelaCadastroUsuario"))
+        screenManager.add_widget(CadastroUsuario(name="TelaCadastroUsuario"))
         main.add_widget(screenManager)
         tela.add_widget(main)
         return tela

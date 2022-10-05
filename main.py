@@ -37,7 +37,7 @@ class TelaCadastro(Screen):
             'razaoSocial': self.ids['razaoSocial'].text,
             'fantasia': self.ids['fantasia'].text,
             'telefone': self.ids['telefone'].text,
-            'e-mail': self.ids['e-mail'].text,
+            'email': self.ids['email'].text,
             'cep': self.ids['cep'].text,
             'logradouro': self.ids['logradouro'].text,
             'bairro': self.ids['bairro'].text,
@@ -56,7 +56,42 @@ class TelaCadastro(Screen):
         pop.open()
 
 class CadastroUsuario(Screen):
-    pass
+    def cadastrarDados(self):
+        api = "http://127.0.0.1:5000/cadastroUsuario"
+
+        if self.ids["tipo"].text == "":
+            box = BoxLayout(orientation="vertical")
+            msg = Label(text="Insira o tipo de usuário - Adm / Gestor / Representante!")
+            box.add_widget(msg)
+            pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
+            size=(400, 50), pos_hint={"top": 0.97}, background_color=(220/255, 53/255, 69/255, 1))
+            pop.open()
+            return
+        dados_empresa = {
+            'tipo': self.ids['tipo'].text,
+            'empresa': self.ids['empresa'].text,
+            'nome': self.ids['nome'].text,
+            'cpf': self.ids['cpf'].text,
+            'telefone': self.ids['telefone'].text,
+            'cep': self.ids['cep'].text,
+            'logradouro': self.ids['logradouro'].text,
+            'bairro': self.ids['bairro'].text,
+            'numero': self.ids['numero'].text,
+            'complemento': self.ids['complemento'].text,
+            'cidade': self.ids['cidade'].text,
+            'estado': self.ids['estado'].text,
+            'email': self.ids['email'].text,
+            'senha': self.ids['senha'].text,
+            'confirmarSenha': self.ids['confirmarSenha'].text
+        }
+        response = requests.post(url=api, data=dados_empresa)
+        response = json.loads(response.content.decode())
+        box = BoxLayout(orientation="vertical")
+        msg = Label(text=response["msg"])
+        box.add_widget(msg)
+        pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
+            size=(300, 60), pos_hint={"top": 0.97}, background_color=response["color_msg"])
+        pop.open()
 
 screenManager = ScreenManager()
 

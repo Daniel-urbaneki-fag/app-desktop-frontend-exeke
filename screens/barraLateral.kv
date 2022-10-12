@@ -10,49 +10,68 @@
     BoxLayout:
         orientation: 'vertical'
         size_hint_y: None
-        height: 300
+        height: 400
         BoxLayout:
             orientation: 'vertical'
-            padding: 20
-            size_hint_y: .1
+            size_hint_y: None
+            height: 50
+            padding: 30, 10
             RoundedButton:
                 size_hint: (1, 1)
                 text: 'Solicitações'
         BoxLayout:
             orientation: 'vertical'
-            padding: 20
-            size_hint_y: .1
-            RoundedButton:
-                size_hint: (1, 1)
-                text: 'Usuários'
-            Button:
-                text: 'Novo usuário'
-                on_press: root.mudaTela("TelaCadastroUsuario")
-            Button:
-                text: 'Editar usuário'
+            size_hint_y: None
+            height: 170
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 50
+                padding: 30, 10
+                RoundedButton:
+                    size_hint: (1, 1)
+                    text: 'Usuários'
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 50
+                padding: 30, 10
+                Button:
+                    text: 'Novo usuário'
+                    on_press: root.mudaTela("TelaCadastroUsuario")
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 50
+                padding: 30, 10
+                Button:
+                    text: 'Editar usuário'
         BoxLayout:
             orientation: 'vertical'
-            padding: 20
-            size_hint_y: .1
-            RoundedButton:
-                size_hint: (1, 1)
-                text: 'Empresa'
-            Button:
-                text: 'Nova empresa'
-                on_press: root.mudaTela("TelaCadastroEmpresa")
-            Button:
-                text: 'Editar empresa'
+            size_hint_y: None
+            height: 170
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 50
+                padding: 30, 10
+                RoundedButton:
+                    size_hint: (1, 1)
+                    text: 'Empresa'
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 50
+                padding: 30, 10
+                Button:
+                    text: 'Nova empresa'
+                    on_press: root.mudaTela("TelaCadastroEmpresa")
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 50
+                padding: 30, 10
+                Button:
+                    text: 'Editar empresa'
     BoxLayout:
         orientation: "vertical"
-
-<RoundedButton@Button>
-    background_color: (0, 0, 0, 0)
-    background_normal: ''
-    pos_hint: {'center_x': 0.5}
-    canvas.before:
-        Color:
-            rgba: (242/255, 106/255, 53/255, 1)
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [7]

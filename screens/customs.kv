@@ -1,0 +1,47 @@
+<MyCheckbox@BoxLayout+ActionItem>:
+    ActionLabel:
+        text: 'Selec.'
+    ActionCheck:
+
+<BoxRounded@BoxLayout>
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (196/255, 196/255, 196/255, 0.28)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [7]
+
+<LinhaDados@BoxLayout>
+    orientation: 'horizontal'
+    padding: 10
+
+<ColunaDado@BoxLayout>
+    orientation: 'vertical'
+    size_hint_y: None
+    height: 60
+    padding: 5
+
+<TextoForm@Label>
+    font_size: '16sp'
+    text_size: (self.width, None)
+    size_hint: (1, 0.5)
+    padding: (0, 10)
+
+<TextInput>
+    font_size : '16sp'
+    multiline : False
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    size_hint: (.1, .5)
+    pos_hint: {'center_x': 0.5}
+    canvas.before:
+        Color:
+            rgba: (242/255, 106/255, 53/255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [7]

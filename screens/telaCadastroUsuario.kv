@@ -1,5 +1,123 @@
 <TelaCadastroUsuario>
     BoxLayout:
         orientation: 'vertical'
+        padding: 50
+        canvas.before:
+            Color:
+                rgba: (43/255, 55/255, 63/255, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
         Label:
-            text: "Tela 2"
+            text: 'Novo Usuário'
+            font_size: '25sp'
+            text_size: (self.width, None)
+            size_hint: (1, 0.1)
+        BoxRounded:
+            orientation: 'vertical'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            padding: 20
+            Label:
+                text: 'Dados cadastrais'
+                font_size: '16sp'
+                text_size: (self.width, None)
+                size_hint: (1, 0.1)
+            LinhaDados:
+                ColunaDado:
+                    size_hint_x: 0.3
+                    id: tipo
+                    TextoForm:
+                        text: 'Tipo'
+                ColunaDado:
+                    TextoForm:
+                        text: 'Empresa'
+                    TextInput:
+                        id: empresa
+            LinhaDados:
+                ColunaDado:
+                    TextoForm:
+                        text: 'Nome'
+                    TextInput:
+                        id: nome
+                ColunaDado:
+                    id: idCpf
+                    TextoForm:
+                        text: 'CPF'
+                ColunaDado:
+                    TextoForm:
+                        text: 'Telefone'
+                    TextInput:
+                        id: telefone
+            LinhaDados:
+                ColunaDado:
+                    TextoForm:
+                        text: 'CEP'
+                    TextInput:
+                        id: cep
+                ColunaDado:
+                    TextoForm:
+                        text: 'Logradouro'
+                    TextInput:
+                        id: logradouro
+                ColunaDado:
+                    TextoForm:
+                        text: 'Bairro'
+                    TextInput:
+                        id: bairro
+                ColunaDado:
+                    TextoForm:
+                        text: 'Número'
+                    TextInput:
+                        id: numero
+            LinhaDados:
+                ColunaDado:
+                    TextoForm:
+                        text: 'Complemento'
+                    TextInput:
+                        id: complemento
+                ColunaDado:
+                    TextoForm:
+                        text: 'Cidade'
+                    TextInput:
+                        id: cidade
+                ColunaDado:
+                    TextoForm:
+                        text: 'Estado'
+                    TextInput:
+                        id: estado
+            LinhaDados:
+                ColunaDado:
+                    TextoForm:
+                        text: 'E-mail'
+                    TextInput:
+                        id: email
+                ColunaDado:
+                    TextoForm:
+                        text: 'Senha'
+                    TextInput:
+                        id: senha
+                ColunaDado:
+                    TextoForm:
+                        text: 'Confirmação de senha'
+                    TextInput:
+                        id: confirmarSenha
+            RoundedButton:
+                text: 'Salvar'
+                on_press: root.cadastrarDados()
+
+<CustomDropDown>:
+    Button:
+        text: 'Administrador'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('Administrador')
+    Button:
+        text: 'Gestor'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('Gestor')
+    Button:
+        text: 'Representante'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('Representante')

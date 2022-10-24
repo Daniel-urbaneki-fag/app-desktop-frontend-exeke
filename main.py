@@ -1,3 +1,4 @@
+from cgitb import text
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -17,6 +18,7 @@ Builder.load_file('screens/barraAcao.kv')
 Builder.load_file('screens/barraLateral.kv')
 Builder.load_file('screens/telaCadastroEmpresa.kv')
 Builder.load_file('screens/telaCadastroUsuario.kv')
+Builder.load_file('screens/telaUsuarios.kv')
 
 class MenuScreen(ScreenManager):
     pass
@@ -31,46 +33,33 @@ class BarraAcao(BoxLayout):
     pass
 
 class InputCpf(TextInput):
-    cpf = ""
     def insert_text(self, substring, from_undo=False):
-        self.cpf += substring
-        if len(self.cpf) <= 14:
-            if(len(self.cpf) >= 3 and len(self.cpf) < 4):
-                substring += "."
-                self.cpf += "."
-            elif(len(self.cpf) >= 7 and len(self.cpf) < 8):
-                substring += "."
-                self.cpf += "."
-            if(len(self.cpf) >= 11 and len(self.cpf) < 12):
-                substring += "-"
-                self.cpf += "-"
+        if len(self.text) < 14:
+            if len(self.text) == 3 or len(self.text) == 7:
+                self.text += "."
+            if len(self.text) == 11:
+                self.text += "-"
             return super().insert_text(substring, from_undo=from_undo)
 
 class InputCnpj(TextInput):
-    cnpj = ""
     def insert_text(self, substring, from_undo=False):
-        self.cnpj += substring
-        if len(self.cnpj) <= 18:
-            if(len(self.cnpj) >= 2 and len(self.cnpj) < 3):
+        if len(self.text) < 18:
+            if(len(self.text) == 1 or len(self.text) == 5):
                 substring += "."
-                self.cnpj += "."
-            elif(len(self.cnpj) >= 6 and len(self.cnpj) < 7):
-                substring += "."
-                self.cnpj += "."
-            if(len(self.cnpj) >= 10 and len(self.cnpj) < 11):
+            if(len(self.text) == 9):
                 substring += "/"
-                self.cnpj += "/"
-            if(len(self.cnpj) >= 15 and len(self.cnpj) < 1):
+            if(len(self.text) == 14):
                 substring += "-"
-                self.cnpj += "-"
             return super().insert_text(substring, from_undo=from_undo)
-
 
 screenManager = ScreenManager(transition=NoTransition())
 
 class BarraLateral(BoxLayout):
     def mudaTela(self, tela):
         screenManager.current = tela
+
+class TelaUsuarios(Screen):
+    pass
 
 class TelaCadastroEmpresa(Screen):
 
@@ -137,6 +126,25 @@ class TelaCadastroUsuario(Screen):
             tipo = 1
         elif self.ids['tipo'].children[0].text == "Gestor":
             tipo = 2
+        
+        if self.ids['senha'].text != "":
+            if self.ids['confirmarSenha'].text != self.ids['senha'].text:
+                box = BoxLayout(orientation="vertical")
+                msg = Label(text="Senha e confirmação de senha, não conferem!")
+                box.add_widget(msg)
+                pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
+                size=(400, 50), pos_hint={"top": 0.97}, background_color=(220/255, 53/255, 69/255, 1))
+                pop.open()
+                return
+        else:
+            box = BoxLayout(orientation="vertical")
+            msg = Label(text="Digite uma senha!")
+            box.add_widget(msg)
+            pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
+            size=(400, 50), pos_hint={"top": 0.97}, background_color=(220/255, 53/255, 69/255, 1))
+            pop.open()
+            return
+
         dados_usuario = {
             'tipo': tipo,
             'empresa': self.ids['empresa'].text,
@@ -152,7 +160,6 @@ class TelaCadastroUsuario(Screen):
             'estado': self.ids['estado'].text,
             'email': self.ids['email'].text,
             'senha': self.ids['senha'].text,
-            'confirmarSenha': self.ids['confirmarSenha'].text
         }
         enviaSolicitacao(api, dados_usuario)
 
@@ -167,6 +174,7 @@ class ExekeApp(App):
         main.add_widget(BarraLateral())
         screenManager.add_widget(TelaCadastroEmpresa(name="TelaCadastroEmpresa"))
         screenManager.add_widget(TelaCadastroUsuario(name="TelaCadastroUsuario"))
+        screenManager.add_widget(TelaUsuarios(name="TelaUsuarios"))
         main.add_widget(screenManager)
         tela.add_widget(main)
         return tela

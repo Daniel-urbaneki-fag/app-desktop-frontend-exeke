@@ -1,4 +1,3 @@
-from cgitb import text
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -34,23 +33,57 @@ class BarraAcao(BoxLayout):
 
 class InputCpf(TextInput):
     def insert_text(self, substring, from_undo=False):
-        if len(self.text) < 14:
-            if len(self.text) == 3 or len(self.text) == 7:
-                self.text += "."
-            if len(self.text) == 11:
-                self.text += "-"
-            return super().insert_text(substring, from_undo=from_undo)
+        try:
+            int(substring)
+            if len(substring) == 1:
+                if len(self.text) < 14:
+                    if len(self.text) == 3 or len(self.text) == 7:
+                        self.text += "."
+                    if len(self.text) == 11:
+                        self.text += "-"
+                    return super().insert_text(substring, from_undo=from_undo)
+            else:
+                if len(self.text) == 0:
+                    filter = ""
+                    for i in range(len(substring)):
+                        filter = filter + substring[i]
+                        if i == 2 or i == 5:
+                            filter = filter + "."
+                        elif i == 8:
+                            filter = filter + "-"
+                    return super().insert_text(filter, from_undo=from_undo)
+        except ValueError as error:
+            if len(substring) == 14:
+                return super().insert_text(substring, from_undo=from_undo)
 
 class InputCnpj(TextInput):
     def insert_text(self, substring, from_undo=False):
-        if len(self.text) < 18:
-            if(len(self.text) == 1 or len(self.text) == 5):
-                substring += "."
-            if(len(self.text) == 9):
-                substring += "/"
-            if(len(self.text) == 14):
-                substring += "-"
-            return super().insert_text(substring, from_undo=from_undo)
+        try:
+            int(substring)
+            if len(substring) == 1:
+                if len(self.text) < 18:
+                    if(len(self.text) == 1 or len(self.text) == 5):
+                        substring += "."
+                    if(len(self.text) == 9):
+                        substring += "/"
+                    if(len(self.text) == 14):
+                        substring += "-"
+                    return super().insert_text(substring, from_undo=from_undo)
+            else:
+                if len(self.text) == 0:
+                    filter = ""
+                    for i in range(len(substring)):
+                        filter = filter + substring[i]
+                        if i == 1 or i == 4:
+                            filter = filter + "."
+                        elif i == 7:
+                            filter = filter + "/"
+                        elif i == 11:
+                            filter = filter + "-"
+                    return super().insert_text(filter, from_undo=from_undo)
+        except ValueError as error:
+            if len(substring) == 18:
+                return super().insert_text(substring, from_undo=from_undo)
 
 screenManager = ScreenManager(transition=NoTransition())
 
@@ -165,8 +198,8 @@ class TelaCadastroUsuario(Screen):
 
 class ExekeApp(App):
     def build(self):
-        Window.size = (1366, 768)
-        self.icon = ('screens/icone.png')
+        # Window.size = (1366, 768)
+        self.icon = ('icone.png')
         self.title = "Exeke Vista"
         tela = Base()
         tela.add_widget(BarraAcao())

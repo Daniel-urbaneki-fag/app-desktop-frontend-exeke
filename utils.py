@@ -4,6 +4,32 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 
+def pegaDadosPost(api, dados):
+    box = BoxLayout(orientation="vertical")
+    try:
+        response = requests.post(url=api, data=dados)
+        response = json.loads(response.content.decode())
+        return response
+    except:
+        msg = Label(text="Erro na conexão !")
+        pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
+        size=(300, 60), pos_hint={"top": 0.97}, background_color=(220/255, 53/255, 69/255, 1))
+    box.add_widget(msg)
+    pop.open()
+
+def pegaDados(api):
+    box = BoxLayout(orientation="vertical")
+    try:
+        response = requests.get(url=api)
+        response = json.loads(response.content.decode())
+        return response
+    except:
+        msg = Label(text="Erro na conexão !")
+        pop = Popup(title="", content=box, size_hint=(None, None), separator_height=0, background="",
+        size=(300, 60), pos_hint={"top": 0.97}, background_color=(220/255, 53/255, 69/255, 1))
+    box.add_widget(msg)
+    pop.open()
+
 def enviaSolicitacao(api, dados):
     box = BoxLayout(orientation="vertical")
     try:

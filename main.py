@@ -9,7 +9,7 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 
-from utils import enviaSolicitacao
+from utils import enviaSolicitacao, pegaDados, pegaDadosPost
 
 Builder.load_file('screens/base.kv')
 Builder.load_file('screens/customs.kv')
@@ -92,7 +92,52 @@ class BarraLateral(BoxLayout):
         screenManager.current = tela
 
 class TelaUsuarios(Screen):
-    pass
+    response = []
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.lerTabelaUsuarios()
+    
+    def editarUsuario(self, value):
+        self.clear_widgets()
+        telaEditar = TelaCadastroUsuario()
+        telaEditar.ids["textoTela"].text = "Editar Usuário"
+
+        api = "http://127.0.0.1:5000/lerDadosUsuario"
+        response = pegaDadosPost(api, {"id" : value.ids["id"]})
+        if response:
+            response = response[0]
+            # telaEditar.ids['tipo'].text = str(response["tipo"])
+            telaEditar.ids['empresa'].text = response["empresa"]
+            telaEditar.ids['nome'].text = response["nome"]
+            telaEditar.ids['cpf'].text = str(response["cpf"])
+            telaEditar.ids['telefone'].text = response["telefone"]
+            telaEditar.ids['cep'].text = response["cep"]
+            telaEditar.ids['logradouro'].text = response["logradouro"]
+            telaEditar.ids['bairro'].text = response["bairro"]
+            telaEditar.ids['numero'].text = response["numero"]
+            telaEditar.ids['complemento'].text = response["complemento"]
+            telaEditar.ids['cidade'].text = response["cidade"]
+            telaEditar.ids['estado'].text = response["estado"]
+            telaEditar.ids['email'].text = response["email"]
+        self.add_widget(telaEditar)
+
+    def lerTabelaUsuarios(self):
+        api = "http://127.0.0.1:5000/lerTabelaUsuarios"
+        self.response = pegaDados(api)
+        if self.response:
+            for usuario in self.response:
+                box = BoxLayout(size_hint=(1, None),  height=40)
+                box.add_widget(Label(text=str(usuario["id"]), font_size="16sp", text_size=(self.width + 88, None)))
+                box.add_widget(Label(text=str(usuario["nome"]), font_size="16sp", text_size=(self.width + 88, None)))
+                box.add_widget(Label(text=str(usuario["email"]), font_size="16sp", text_size=(self.width + 88, None)))
+                box.add_widget(Label(text=str(usuario["empresa"]), font_size="16sp", text_size=(self.width + 88, None)))
+                box.add_widget(Label(text=str(usuario["telefone"]), font_size="16sp", text_size=(self.width + 88, None)))
+                editar = Button(text="Editar", ids={"id" : str(usuario["id"])})
+                editar.bind(on_press=self.editarUsuario)
+                box.add_widget(editar)
+                self.ids['tabela'].add_widget(box)
+
 
 class TelaCadastroEmpresa(Screen):
 
@@ -198,16 +243,16 @@ class TelaCadastroUsuario(Screen):
 
 class ExekeApp(App):
     def build(self):
-        # Window.size = (1366, 768)
+        Window.size = (1366, 768)
         self.icon = ('icone.png')
         self.title = "Exeke Vista"
         tela = Base()
         tela.add_widget(BarraAcao())
         main = BoxLayout()
         main.add_widget(BarraLateral())
+        screenManager.add_widget(TelaUsuarios(name="TelaUsuarios"))
         screenManager.add_widget(TelaCadastroEmpresa(name="TelaCadastroEmpresa"))
         screenManager.add_widget(TelaCadastroUsuario(name="TelaCadastroUsuario"))
-        screenManager.add_widget(TelaUsuarios(name="TelaUsuarios"))
         main.add_widget(screenManager)
         tela.add_widget(main)
         return tela

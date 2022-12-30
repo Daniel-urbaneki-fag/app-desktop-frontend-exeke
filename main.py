@@ -18,6 +18,7 @@ Builder.load_file('screens/barraLateral.kv')
 Builder.load_file('screens/telaCadastroEmpresa.kv')
 Builder.load_file('screens/telaCadastroUsuario.kv')
 Builder.load_file('screens/telaUsuarios.kv')
+Builder.load_file('screens/telaEmpresas.kv')
 
 class MenuScreen(ScreenManager):
     pass
@@ -90,6 +91,25 @@ screenManager = ScreenManager(transition=NoTransition())
 class BarraLateral(BoxLayout):
     def mudaTela(self, tela):
         screenManager.current = tela
+
+class TelaEmpresas(Screen):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.lerTabelaEmpresas()
+    
+    def lerTabelaEmpresas(self):
+        api = "http://127.0.0.1:5000/lerTabelaEmpresas"
+        self.response = pegaDados(api)
+        if self.response:
+            for usuario in self.response:
+                box = BoxLayout(size_hint=(1, None),  height=40)
+                box.add_widget(Label(text=str(usuario["id"]), font_size="16sp", text_size=(self.width + 88, None)))
+                box.add_widget(Label(text=str(usuario["razaoSocial"]), font_size="16sp", text_size=(self.width + 88, None)))
+                box.add_widget(Label(text=str(usuario["cnpj"]), font_size="16sp", text_size=(self.width + 88, None)))
+                editar = Button(text="Editar", ids={"id" : str(usuario["id"])})
+                # editar.bind(on_press=self.editarUsuario)
+                box.add_widget(editar)
+                self.ids['tabela'].add_widget(box)
 
 class TelaUsuarios(Screen):
     response = []
@@ -250,6 +270,7 @@ class ExekeApp(App):
         tela.add_widget(BarraAcao())
         main = BoxLayout()
         main.add_widget(BarraLateral())
+        screenManager.add_widget(TelaEmpresas(name="TelaEmpresas"))
         screenManager.add_widget(TelaUsuarios(name="TelaUsuarios"))
         screenManager.add_widget(TelaCadastroEmpresa(name="TelaCadastroEmpresa"))
         screenManager.add_widget(TelaCadastroUsuario(name="TelaCadastroUsuario"))
